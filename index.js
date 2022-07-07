@@ -1,3 +1,7 @@
+import {image} from './images.js';
+// import platform from './img/platform.png';
+// let platform = document.querySelector('.myImg').src = './img/platform.png';
+
 const canvas = document.querySelector('canvas');
 const context = canvas.getContext('2d');
 
@@ -42,7 +46,7 @@ class Player {
 }
 
 class Platform {
-    constructor({xPos, yPos}) {
+    constructor({xPos, yPos, image}) {
         this.position = {
             x: xPos,
             y: yPos,
@@ -50,16 +54,21 @@ class Platform {
 
         this.width = 170;
         this.height = 20;
+
+        this.image = image;
     }
 
     draw() {
-        context.fillStyle = 'blue';
-        context.fillRect(this.position.x, this.position.y, this.width, this.height);
+        context.drawImage(this.image, this.position.x, this.position.y);
     }
 }
 
+// const image = new Image(); // Creates img in html
+// image.src = platform;
+
+
 const player = new Player();
-const platforms = [new Platform({xPos: 200, yPos: 700}), new Platform({xPos: 400,yPos: 800})];
+const platforms = [new Platform({xPos: 200, yPos: 700, image: image}), new Platform({xPos: 400,yPos: 800, image: image})];
 
 const keys = {
     right: {
