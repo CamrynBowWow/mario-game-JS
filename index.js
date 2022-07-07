@@ -41,7 +41,25 @@ class Player {
     }
 }
 
+class Platform {
+    constructor() {
+        this.position = {
+            x: 200,
+            y: 800,
+        }
+
+        this.width = 200;
+        this.height = 20;
+    }
+
+    draw() {
+        context.fillStyle = 'blue';
+        context.fillRect(this.position.x, this.position.y, this.width, this.height);
+    }
+}
+
 const player = new Player();
+const platform = new Platform();
 
 const keys = {
     right: {
@@ -56,6 +74,7 @@ function animate() {
     requestAnimationFrame(animate);
     context.clearRect(0, 0, canvas.width, canvas.height);
     player.update();
+    platform.draw();
 
     if (keys.right.pressed) {
         player.velocity.x = 2;
@@ -64,10 +83,16 @@ function animate() {
     } else {
         player.velocity.x = 0;
     }
+
+    // Collision with Platform for player to land on and fall off 'platform collision detection
+    if (player.position.y + player.height <= platform.position.y && player.position.y + player.height + player.velocity.y >= platform.position.y && player.position.x + player.width >= platform.position.x && player.position.x <= platform.position.x + platform.width){
+        player.velocity.y = 0;
+    }
 }
 
 animate();
 
+// TODO make S key something 
 window.addEventListener('keydown', ({ keyCode }) => {
     switch (keyCode) {
         case 65: // A key 'left'
