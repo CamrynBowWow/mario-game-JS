@@ -15,13 +15,13 @@ const gravity = .8;
 class Player {
     constructor() {
         this.position = {
-            x: 100,
+            x: 200,
             y: 100,
         }
 
         this.velocity = {
             x: 0,
-            y: 1,
+            y: 0,
         }
 
         this.width = 30
@@ -41,9 +41,7 @@ class Player {
 
         if (this.position.y + this.height + this.velocity.y <= canvas.height) {
             this.velocity.y += gravity;
-        } else {
-            this.velocity.y = 0;
-        }
+        } 
     }
 }
 
@@ -85,13 +83,13 @@ class GenericObject {
     }
 }
 
-const platformImage = createImage(platform);
+let platformImage = createImage(platform);
 
-const player = new Player();
-const platforms = [new Platform({xPos: -1, yPos: 470, image: platformImage}), new Platform({xPos: platformImage.width - 3, yPos: 470, image: platformImage})];
-const genericObjects = [new GenericObject({xPos: -1, yPos: -1, image: createImage(background)}), new GenericObject({xPos: -1, yPos: -1, image: createImage(hills)})];
+let player = new Player();
+let platforms = [new Platform({xPos: -1, yPos: 470, image: platformImage}), new Platform({xPos: platformImage.width - 3, yPos: 470, image: platformImage}),  new Platform({xPos: platformImage.width * 2 + 150, yPos: 470, image: platformImage})];
+let genericObjects = [new GenericObject({xPos: -1, yPos: -1, image: createImage(background)}), new GenericObject({xPos: -1, yPos: -1, image: createImage(hills)})];
 
-const keys = {
+let keys = {
     right: {
         pressed: false
     },
@@ -101,6 +99,17 @@ const keys = {
 }
 
 let scrollOffset = 0; // Used for when the player wins
+
+// Rests all the values and starts the game over when player dies
+function init() {
+    platformImage = createImage(platform);
+    
+    player = new Player();
+    platforms = [new Platform({xPos: -1, yPos: 470, image: platformImage}), new Platform({xPos: platformImage.width - 3, yPos: 470, image: platformImage}),  new Platform({xPos: platformImage.width * 2 + 150, yPos: 470, image: platformImage})];
+    genericObjects = [new GenericObject({xPos: -1, yPos: -1, image: createImage(background)}), new GenericObject({xPos: -1, yPos: -1, image: createImage(hills)})];
+    
+    scrollOffset = 0; // Used for when the player wins
+}
 
 function animate() {
     requestAnimationFrame(animate);
@@ -119,7 +128,7 @@ function animate() {
 
     if (keys.right.pressed && player.position.x < 400) {
         player.velocity.x = 4;
-    } else if (keys.left.pressed && player.position.x > 100) {
+    } else if (keys.left.pressed && player.position.x > 170) {
         player.velocity.x = -4;
     } else {
         player.velocity.x = 0;
@@ -152,9 +161,15 @@ function animate() {
 
     // TODO make winner dialog and restart game option and maybe exit game
     // Also make it that the player can't go far back and the platforms stop moving right
+    // Win condition
     if (scrollOffset > 2000) {
         console.log('You win');
     } 
+
+    // Lose condition
+    if (player.position.y > canvas.height){
+        init();
+    }
 }
 
 animate();
