@@ -1,16 +1,14 @@
-import {image} from './images.js';
+import {createImage} from './CreateImage.js';
+
+let platform = document.querySelector('.myImg').src = './img/platform.png';
+let hills = document.querySelector('.myImg').src = './img/hills.png';
+let background = document.querySelector('.myImg').src = './img/background.png';
 
 const canvas = document.querySelector('canvas');
 const context = canvas.getContext('2d');
 
-// canvas.width = innerWidth;
-// canvas.height = innerHeight;
-
-// What the youtuber put in
 canvas.width = 1024;
 canvas.height = 576; 
-// canvas.width = 1920;
-// canvas.height = 1080; // My computer settings
 
 const gravity = .8;
 
@@ -68,8 +66,30 @@ class Platform {
     }
 }
 
+class GenericObject {
+    constructor({xPos, yPos, image}) {
+        this.position = {
+            x: xPos,
+            y: yPos,
+        }
+        
+        this.image = image;
+
+        this.width = image.width;
+        this.height = image.height;
+
+    }
+
+    draw() {
+        context.drawImage(this.image, this.position.x, this.position.y);
+    }
+}
+
+const platformImage = createImage(platform);
+
 const player = new Player();
-const platforms = [new Platform({xPos: -1, yPos: 470, image: image}), new Platform({xPos: image.width - 3, yPos: 470, image: image})];
+const platforms = [new Platform({xPos: -1, yPos: 470, image: platformImage}), new Platform({xPos: platformImage.width - 3, yPos: 470, image: platformImage})];
+const genericObjects = [new GenericObject({xPos: -1, yPos: -1, image: createImage(background)}), new GenericObject({xPos: -1, yPos: -1, image: createImage(hills)})];
 
 const keys = {
     right: {
@@ -86,7 +106,10 @@ function animate() {
     requestAnimationFrame(animate);
     context.fillStyle = 'white';
     context.fillRect(0, 0, canvas.width, canvas.height);
-    // context.clearRect(0, 0, canvas.width, canvas.height);
+
+    genericObjects.forEach(genericObject => {
+        genericObject.draw();
+    })
     
     platforms.forEach((platform) => {
         platform.draw();
@@ -101,17 +124,22 @@ function animate() {
     } else {
         player.velocity.x = 0;
 
-        // Platforms move left and right
         if (keys.right.pressed) {
             scrollOffset += 4;
-            platforms.forEach((platform) => {
+            platforms.forEach((platform) => { // Platforms moves left
                 platform.position.x -= 4;
-            })
+            });
+            genericObjects.forEach(genericObject => { // Moves the background and hills left
+                genericObject.position.x -= 1.5;
+            });
         } else if (keys.left.pressed) {
             scrollOffset -= 4;
-            platforms.forEach((platform) => {
+            platforms.forEach((platform) => { // Platforms moves right
                 platform.position.x += 4;
-            })
+            });
+            genericObjects.forEach(genericObject => { // Moves the background and hills right
+                genericObject.position.x += 1.5;
+            });
         }
     }
 
