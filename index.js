@@ -1,12 +1,16 @@
 import {image} from './images.js';
-// import platform from './img/platform.png';
-// let platform = document.querySelector('.myImg').src = './img/platform.png';
 
 const canvas = document.querySelector('canvas');
 const context = canvas.getContext('2d');
 
-canvas.width = innerWidth;
-canvas.height = innerHeight;
+// canvas.width = innerWidth;
+// canvas.height = innerHeight;
+
+// What the youtuber put in
+canvas.width = 1024;
+canvas.height = 576; 
+// canvas.width = 1920;
+// canvas.height = 1080; // My computer settings
 
 const gravity = .8;
 
@@ -51,11 +55,12 @@ class Platform {
             x: xPos,
             y: yPos,
         }
-
-        this.width = 170;
-        this.height = 20;
-
+        
         this.image = image;
+
+        this.width = image.width;
+        this.height = image.height;
+
     }
 
     draw() {
@@ -63,12 +68,8 @@ class Platform {
     }
 }
 
-// const image = new Image(); // Creates img in html
-// image.src = platform;
-
-
 const player = new Player();
-const platforms = [new Platform({xPos: 200, yPos: 700, image: image}), new Platform({xPos: 400,yPos: 800, image: image})];
+const platforms = [new Platform({xPos: -1, yPos: 470, image: image}), new Platform({xPos: image.width - 3, yPos: 470, image: image})];
 
 const keys = {
     right: {
@@ -83,12 +84,15 @@ let scrollOffset = 0; // Used for when the player wins
 
 function animate() {
     requestAnimationFrame(animate);
-    context.clearRect(0, 0, canvas.width, canvas.height);
-    player.update();
-
+    context.fillStyle = 'white';
+    context.fillRect(0, 0, canvas.width, canvas.height);
+    // context.clearRect(0, 0, canvas.width, canvas.height);
+    
     platforms.forEach((platform) => {
         platform.draw();
     })
+
+    player.update();
 
     if (keys.right.pressed && player.position.x < 400) {
         player.velocity.x = 4;
