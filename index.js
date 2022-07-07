@@ -42,13 +42,13 @@ class Player {
 }
 
 class Platform {
-    constructor() {
+    constructor({xPos, yPos}) {
         this.position = {
-            x: 200,
-            y: 800,
+            x: xPos,
+            y: yPos,
         }
 
-        this.width = 200;
+        this.width = 170;
         this.height = 20;
     }
 
@@ -59,7 +59,8 @@ class Platform {
 }
 
 const player = new Player();
-const platform = new Platform();
+// const platform = new Platform();
+const platforms = [new Platform({xPos: 200, yPos: 700}), new Platform({xPos: 400,yPos: 800})];
 
 const keys = {
     right: {
@@ -74,20 +75,37 @@ function animate() {
     requestAnimationFrame(animate);
     context.clearRect(0, 0, canvas.width, canvas.height);
     player.update();
-    platform.draw();
 
-    if (keys.right.pressed) {
-        player.velocity.x = 2;
-    } else if (keys.left.pressed) {
-        player.velocity.x = -2;
+    platforms.forEach((platform) => {
+        platform.draw();
+    })
+    // platform.draw();
+
+    if (keys.right.pressed && player.position.x < 400) {
+        player.velocity.x = 4;
+    } else if (keys.left.pressed && player.position.x > 100) {
+        player.velocity.x = -4;
     } else {
         player.velocity.x = 0;
+
+        // Platforms move left and right
+        if (keys.right.pressed) {
+            platforms.forEach((platform) => {
+                platform.position.x -= 4;
+            })
+        } else if (keys.left.pressed) {
+            platforms.forEach((platform) => {
+                platform.position.x += 4;
+            })
+        }
     }
 
     // Collision with Platform for player to land on and fall off 'platform collision detection
-    if (player.position.y + player.height <= platform.position.y && player.position.y + player.height + player.velocity.y >= platform.position.y && player.position.x + player.width >= platform.position.x && player.position.x <= platform.position.x + platform.width){
-        player.velocity.y = 0;
-    }
+    platforms.forEach((platform) => {
+        if (player.position.y + player.height <= platform.position.y && player.position.y + player.height + player.velocity.y >= platform.position.y && player.position.x + player.width >= platform.position.x && player.position.x <= platform.position.x + platform.width){
+            player.velocity.y = 0;
+        }
+    })
 }
 
 animate();
