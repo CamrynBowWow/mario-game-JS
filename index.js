@@ -67,49 +67,41 @@ function animate() {
 }
 
 animate();
-// TODO Work on player movement as it is not good
-// Make W key a keypress and remove some keys to make it more static 
+
 window.addEventListener('keydown', ({ keyCode }) => {
     switch (keyCode) {
-        case 65: // A key
-            console.log('left');
+        case 65: // A key 'left'
             keys.left.pressed = true;
             break;
 
-        case 83: // S key
-            console.log('down')
+        case 83: // S key 'down'
+            // player.velocity.y += 10;
             break;
 
-        case 68: // D key
-            console.log('right')
+        case 68: // D key 'right'
             keys.right.pressed = true;
             break;
 
-        case 87: // W key
-            console.log('up')
-            player.velocity.y -= 20;
+        case 87: // W key 'up'
+            if (player.velocity.y === 0){
+                player.velocity.y -= 20;
+            }
             break;
     }
 })
 
 window.addEventListener('keyup', ({ keyCode }) => {
     switch (keyCode) {
-        case 65: // A key
-            console.log('left');
+        case 65: // A key 'left'
             keys.left.pressed = false;
             break;
 
-        case 83: // S key
-            console.log('down')
+        case 83: // S key 'down'
             break;
 
-        case 68: // D key
-            console.log('right')
+        case 68: // D key 'right'
             keys.right.pressed = false;
             break;
 
-        case 87: // W key
-            console.log('up')
-            break;
     }
 })
