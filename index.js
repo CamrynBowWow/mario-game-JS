@@ -59,7 +59,6 @@ class Platform {
 }
 
 const player = new Player();
-// const platform = new Platform();
 const platforms = [new Platform({xPos: 200, yPos: 700}), new Platform({xPos: 400,yPos: 800})];
 
 const keys = {
@@ -71,6 +70,8 @@ const keys = {
     }
 }
 
+let scrollOffset = 0; // Used for when the player wins
+
 function animate() {
     requestAnimationFrame(animate);
     context.clearRect(0, 0, canvas.width, canvas.height);
@@ -79,7 +80,6 @@ function animate() {
     platforms.forEach((platform) => {
         platform.draw();
     })
-    // platform.draw();
 
     if (keys.right.pressed && player.position.x < 400) {
         player.velocity.x = 4;
@@ -90,10 +90,12 @@ function animate() {
 
         // Platforms move left and right
         if (keys.right.pressed) {
+            scrollOffset += 4;
             platforms.forEach((platform) => {
                 platform.position.x -= 4;
             })
         } else if (keys.left.pressed) {
+            scrollOffset -= 4;
             platforms.forEach((platform) => {
                 platform.position.x += 4;
             })
@@ -106,6 +108,12 @@ function animate() {
             player.velocity.y = 0;
         }
     })
+
+    // TODO make winner dialog and restart game option and maybe exit game
+    // Also make it that the player can't go far back and the platforms stop moving right
+    if (scrollOffset > 2000) {
+        console.log('You win');
+    } 
 }
 
 animate();
