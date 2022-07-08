@@ -4,6 +4,10 @@ let platform = (document.querySelector('.myImg').src = './img/platform.png');
 let hills = (document.querySelector('.myImg').src = './img/hills.png');
 let background = (document.querySelector('.myImg').src = './img/background.png');
 let platformSmallTall = (document.querySelector('.myImg').src = './img/platformSmallTall.png');
+let spriteRunLeft = (document.querySelector('.myImg').src = './img/spriteRunLeft.png');
+let spriteRunRight = (document.querySelector('.myImg').src = './img/spriteRunRight.png');
+let spriteStandLeft = (document.querySelector('.myImg').src = './img/spriteStandLeft.png');
+let spriteStandRight = (document.querySelector('.myImg').src = './img/spriteStandRight.png');
 
 const canvas = document.querySelector('canvas');
 const context = canvas.getContext('2d');
@@ -26,17 +30,53 @@ class Player {
 			y: 0,
 		};
 
-		this.width = 30;
-		this.height = 30;
+		this.width = 66;
+		this.height = 150;
+
+		this.image = createImage(spriteStandRight);
+		this.frames = 0; // Used to scroll through the png
+		this.sprites = {
+			stand: {
+				right: createImage(spriteStandRight),
+				left: createImage(spriteStandLeft),
+				cropWidth: 177,
+				width: 66,
+			},
+			run: {
+				right: createImage(spriteRunRight),
+				left: createImage(spriteRunLeft),
+				cropWidth: 341,
+				width: 127.875,
+			},
+		};
+
+		this.currentSprite = this.sprites.stand.right;
+		this.currentCropWidth = this.sprites.stand.cropWidth;
 	}
 
 	draw() {
-		context.fillStyle = 'red';
-		context.fillRect(this.position.x, this.position.y, this.width, this.height);
+		context.drawImage(
+			this.currentSprite,
+			this.currentCropWidth * this.frames,
+			0,
+			this.currentCropWidth,
+			400,
+			this.position.x,
+			this.position.y,
+			this.width,
+			this.height
+		);
 	}
 
 	// Gravity code to pull player back down
 	update() {
+		this.frames++; // This will scroll through the png
+		if (this.frames > 59 && (this.currentSprite === this.sprites.stand.right || this.currentSprite === this.sprites.stand.left)) {
+			this.frames = 0;
+		} else if (this.frames > 29 && (this.currentSprite === this.sprites.run.right || this.currentSprite === this.sprites.run.left)) {
+			this.frames = 0;
+		}
+
 		this.draw();
 		this.position.x += this.velocity.x;
 		this.position.y += this.velocity.y;
@@ -89,6 +129,8 @@ let platformSmallTallImage = createImage(platformSmallTall);
 let player = new Player();
 let platforms = [];
 let genericObjects = [];
+
+let lastKey;
 
 let keys = {
 	right: {
@@ -204,6 +246,29 @@ function animate() {
 		}
 	});
 
+	// Makes it look more lively / Sprite switching
+	if (keys.right.pressed && lastKey === 'right' && player.currentSprite !== player.sprites.run.right) {
+		player.frames = 1;
+		player.currentSprite = player.sprites.run.right;
+		player.currentCropWidth = player.sprites.run.cropWidth;
+		player.width = player.sprites.run.width;
+	} else if (keys.left.pressed && lastKey === 'left' && player.currentSprite !== player.sprites.run.left) {
+		player.frames = 1;
+		player.currentSprite = player.sprites.run.left;
+		player.currentCropWidth = player.sprites.run.cropWidth;
+		player.width = player.sprites.run.width;
+	} else if (!keys.left.pressed && lastKey === 'left' && player.currentSprite !== player.sprites.stand.left) {
+		player.frames = 1;
+		player.currentSprite = player.sprites.stand.left;
+		player.currentCropWidth = player.sprites.stand.cropWidth;
+		player.width = player.sprites.stand.width;
+	} else if (!keys.right.pressed && lastKey === 'right' && player.currentSprite !== player.sprites.stand.right) {
+		player.frames = 1;
+		player.currentSprite = player.sprites.stand.right;
+		player.currentCropWidth = player.sprites.stand.cropWidth;
+		player.width = player.sprites.stand.width;
+	}
+
 	// TODO make winner dialog and restart game option and maybe exit game
 	// Win condition
 	if (scrollOffset > platformImage.width * 5 + 550) {
@@ -224,19 +289,21 @@ window.addEventListener('keydown', ({ keyCode }) => {
 	switch (keyCode) {
 		case 65: // A key 'left'
 			keys.left.pressed = true;
+			lastKey = 'left';
 			break;
 
 		case 83: // S key 'down'
-			// player.velocity.y += 10;
+			player.velocity.y += 2;
 			break;
 
 		case 68: // D key 'right'
 			keys.right.pressed = true;
+			lastKey = 'right';
 			break;
 
 		case 87: // W key 'up'
 			if (player.velocity.y === 0) {
-				player.velocity.y -= 20;
+				player.velocity.y -= 18;
 			}
 			break;
 	}
