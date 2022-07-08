@@ -164,7 +164,7 @@ function animate() {
 
 	if (keys.right.pressed && player.position.x < 400) {
 		player.velocity.x = player.speed;
-	} else if (keys.left.pressed && player.position.x > 170) {
+	} else if ((keys.left.pressed && player.position.x > 170) || (keys.left.pressed && scrollOffset === 0 && player.position.x > 0)) {
 		player.velocity.x = -player.speed;
 	} else {
 		player.velocity.x = 0;
@@ -179,7 +179,7 @@ function animate() {
 				// Moves the background and hills left
 				genericObject.position.x -= player.speed * 0.5;
 			});
-		} else if (keys.left.pressed) {
+		} else if (keys.left.pressed && scrollOffset > 0) {
 			scrollOffset -= player.speed;
 			platforms.forEach((platform) => {
 				// Platforms moves right
@@ -205,7 +205,6 @@ function animate() {
 	});
 
 	// TODO make winner dialog and restart game option and maybe exit game
-	// Also make it that the player can't go far back and the platforms stop moving right
 	// Win condition
 	if (scrollOffset > platformImage.width * 5 + 550) {
 		console.log('You win');
