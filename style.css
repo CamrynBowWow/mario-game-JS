@@ -1,21 +1,21 @@
 *,
 *::before,
 *::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
 body {
-  overflow: hidden;
-  background-color: black;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
+	overflow: hidden;
+	background-color: black;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100vh;
 }
 
 .myImg {
-  visibility: hidden;
-  display: none;
+	visibility: hidden;
+	display: none;
 }
