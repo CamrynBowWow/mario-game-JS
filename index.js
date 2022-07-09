@@ -1,5 +1,5 @@
-import { createImage, platformSmallTall } from './CreateImage.js';
-import { reset, player, platformImage, platforms, genericObjects, scrollOffsetNumber, restartButtonClickedValue } from './reset.js';
+import { createImage, platformSmallTall, background } from './CreateImage.js';
+import { reset, player, platforms, genericObjects, scrollOffsetNumber } from './reset.js';
 import { showLoseDialog, hideLoseDialog } from './dialog/LoseDialog.js';
 import { showWinDialog, hideWinDialog } from './dialog/WindDialog.js';
 import { makeDisplayNone, makeDisplayFlex } from './dialog/DialogFunctions.js';
@@ -10,6 +10,8 @@ const restartButton = document.querySelector('#restartButton');
 
 canvas.width = 1280;
 canvas.height = 720;
+
+let backgroundWidth = createImage(background);
 
 export const gravity = 0.8;
 
@@ -29,7 +31,7 @@ let keys = {
 };
 
 let scrollOffset = scrollOffsetNumber; // Used for when the player wins
-let restartButtonClicked = restartButtonClickedValue;
+let restartButtonClicked = false;
 
 function animate() {
 	requestAnimationFrame(animate);
@@ -48,6 +50,7 @@ function animate() {
 
 	if (keys.right.pressed && player.position.x < 400) {
 		player.velocity.x = player.speed;
+		restartButtonClicked = false;
 	} else if ((keys.left.pressed && player.position.x > 170) || (keys.left.pressed && scrollOffset === 0 && player.position.x > 0)) {
 		player.velocity.x = -player.speed;
 	} else {
@@ -111,17 +114,21 @@ function animate() {
 		player.width = player.sprites.stand.width;
 	}
 
-	// TODO make winner dialog and restart game option and maybe exit game
+	// TODO make game option to maybe exit game
 	// Win condition
-	if (scrollOffset > platformImage.width * 5 + 550) {
+	// if (scrollOffset > platformImage.width * 5 + 550) {
+	if (scrollOffset / 2 > backgroundWidth.width - 1450) {
 		makeDisplayFlex();
 		showWinDialog();
 		won = true;
+		player.speed = 0;
 
 		if (restartButtonClicked) {
 			makeDisplayNone();
 			hideWinDialog();
 			won = false;
+			player.speed = 8;
+			scrollOffset = 0; // TODO Fix this as it does not reset from function reset()
 		}
 	}
 
@@ -129,6 +136,7 @@ function animate() {
 	if (player.position.y > canvas.height) {
 		makeDisplayFlex();
 		showLoseDialog();
+		scrollOffset = 0; // TODO Fix this as it does not reset from function reset()
 
 		if (player.position.y > canvas.height + 2000) {
 			reset();
@@ -150,10 +158,8 @@ restartButton.addEventListener('click', () => {
 window.addEventListener('keydown', ({ keyCode }) => {
 	switch (keyCode) {
 		case 65: // A key 'left'
-			if (!won) {
-				keys.left.pressed = true;
-				lastKey = 'left';
-			}
+			keys.left.pressed = true;
+			lastKey = 'left';
 			break;
 
 		case 83: // S key 'down'
@@ -163,17 +169,13 @@ window.addEventListener('keydown', ({ keyCode }) => {
 			break;
 
 		case 68: // D key 'right'
-			if (!won) {
-				keys.right.pressed = true;
-				lastKey = 'right';
-			}
+			keys.right.pressed = true;
+			lastKey = 'right';
 			break;
 
 		case 87: // W key 'up'
-			if (!won) {
-				if (player.velocity.y === 0) {
-					player.velocity.y -= 18;
-				}
+			if (player.velocity.y === 0) {
+				player.velocity.y -= 18;
 			}
 			break;
 	}
