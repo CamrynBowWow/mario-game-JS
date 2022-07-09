@@ -19,3 +19,28 @@ body {
 	visibility: hidden;
 	display: none;
 }
+
+.dialog {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: black;
+	width: 50%;
+	height: 20rem;
+	position: fixed;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+}
+
+#controls {
+	display: none;
+}
+
+#windDialog {
+	display: none;
+}
+
+#loseDialog {
+	display: none;
+}
