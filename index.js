@@ -1,5 +1,6 @@
 import { createImage, platform, hills, background, platformSmallTall } from './CreateImage.js';
 import { Player } from './Player.js';
+import { Platform } from './Platform.js';
 
 export const canvas = document.querySelector('canvas');
 export const context = canvas.getContext('2d');
@@ -8,24 +9,6 @@ canvas.width = 1024;
 canvas.height = 576;
 
 export const gravity = 0.8;
-
-class Platform {
-	constructor({ xPos, yPos, image }) {
-		this.position = {
-			x: xPos,
-			y: yPos,
-		};
-
-		this.image = image;
-
-		this.width = image.width;
-		this.height = image.height;
-	}
-
-	draw() {
-		context.drawImage(this.image, this.position.x, this.position.y);
-	}
-}
 
 class GenericObject {
 	constructor({ xPos, yPos, image }) {
