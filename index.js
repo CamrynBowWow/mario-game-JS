@@ -1,7 +1,5 @@
-import { createImage, platform, hills, background, platformSmallTall } from './CreateImage.js';
-import { Player } from './Player.js';
-import { Platform } from './Platform.js';
-import { GenericObject } from './GenericObject.js';
+import { createImage, platformSmallTall } from './CreateImage.js';
+import { reset, player, platformImage, platforms, genericObjects, scrollOffsetNumber } from './reset.js';
 
 export const canvas = document.querySelector('canvas');
 export const context = canvas.getContext('2d');
@@ -11,12 +9,7 @@ canvas.height = 720;
 
 export const gravity = 0.8;
 
-let platformImage = createImage(platform);
-let platformSmallTallImage = createImage(platformSmallTall);
-
-let player = new Player();
-let platforms = [];
-let genericObjects = [];
+export let platformSmallTallImage = createImage(platformSmallTall);
 
 let lastKey;
 
@@ -29,53 +22,7 @@ let keys = {
 	},
 };
 
-let scrollOffset = 0; // Used for when the player wins
-
-// Rests all the values and starts the game over when player dies
-function reset() {
-	platformImage = createImage(platform);
-
-	player = new Player();
-	platforms = [
-		new Platform({ xPos: -1, yPos: 600, image: platformImage }),
-		new Platform({
-			xPos: platformImage.width - 3,
-			yPos: 600,
-			image: platformImage,
-		}),
-		new Platform({
-			xPos: platformImage.width * 2 + 150,
-			yPos: 600,
-			image: platformImage,
-		}),
-		new Platform({
-			xPos: platformImage.width * 3 + 350,
-			yPos: 600,
-			image: platformImage,
-		}),
-		new Platform({
-			xPos: platformImage.width * 4 + 350 - 2 + platformImage.width - platformSmallTallImage.width,
-			yPos: 400,
-			image: platformSmallTallImage,
-		}),
-		new Platform({
-			xPos: platformImage.width * 4 + 350 - 2,
-			yPos: 600,
-			image: platformImage,
-		}),
-		new Platform({
-			xPos: platformImage.width * 5 + 790,
-			yPos: 600,
-			image: platformImage,
-		}),
-	];
-	genericObjects = [
-		new GenericObject({ xPos: -1, yPos: -1, image: createImage(background) }),
-		new GenericObject({ xPos: -1, yPos: 140, image: createImage(hills) }),
-	];
-
-	scrollOffset = 0; // Used for when the player wins
-}
+let scrollOffset = scrollOffsetNumber; // Used for when the player wins
 
 function animate() {
 	requestAnimationFrame(animate);
