@@ -11,7 +11,7 @@ export class Player {
 		this.speed = 8;
 		this.position = {
 			x: 200,
-			y: 100,
+			y: 450,
 		};
 
 		this.velocity = {

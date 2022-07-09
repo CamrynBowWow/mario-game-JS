@@ -11,6 +11,10 @@
     <script type="module" defer src="Platform.js"></script>
     <script type="module" defer src="GenericObject.js"></script>
     <script type="module" defer src="Reset.js"></script>
+    <script type="module" defer src="./dialog/LoseDialog.js"></script>
+    <script type="module" defer src="./dialog/ControlsDialog.js"></script>
+    <script type="module" defer src="./dialog/DialogFunctions.js"></script>
+    <script type="module" defer src="./dialog/WindDialog.js"></script>
     <title>Mario Game</title>
 </head>
 <body>   
@@ -20,7 +24,9 @@
     <div class="dialog">
         <div id="controls"></div>
         <div id="winDialog"></div>
-        <div id="loseDialog"></div>
+        <div id="loseDialog" class="hide">
+            You Lose
+        </div>
     </div>
     
 </body>

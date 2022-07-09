@@ -1,5 +1,7 @@
 import { createImage, platformSmallTall } from './CreateImage.js';
 import { reset, player, platformImage, platforms, genericObjects, scrollOffsetNumber } from './reset.js';
+import { showLoseDialog } from './dialog/LoseDialog.js';
+import { loseDialog } from './dialog/LoseDialog.js';
 
 export const canvas = document.querySelector('canvas');
 export const context = canvas.getContext('2d');
@@ -112,6 +114,12 @@ function animate() {
 
 	// Lose condition
 	if (player.position.y > canvas.height) {
+		showLoseDialog();
+		// setTimeout(() => { // might need work
+		// 	if (loseDialog.className === 'hide') {
+		// 		reset();
+		// 	}
+		// }, 1000);
 		reset();
 	}
 }
