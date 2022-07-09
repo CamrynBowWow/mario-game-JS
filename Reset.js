@@ -10,6 +10,7 @@ export let platforms = [];
 export let genericObjects = [];
 
 export let scrollOffsetNumber = 0;
+export let restartButtonClickedValue = false;
 
 export function reset() {
 	platformImage = createImage(platform);
@@ -54,4 +55,5 @@ export function reset() {
 	];
 
 	scrollOffsetNumber = 0; // Used for when the player wins
+	restartButtonClickedValue = false; // When the player clicks the restart button
 }

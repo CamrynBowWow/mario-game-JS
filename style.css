@@ -37,8 +37,36 @@ body {
 	display: none;
 }
 
-#windDialog {
+#winDialog {
 	display: none;
+	flex-direction: column;
+	align-items: center;
+	gap: 1rem;
+	justify-content: center;
+	text-transform: uppercase;
+}
+
+#winDialog h2 {
+	text-shadow: 3px 0px 2px black;
+	color: white;
+	font-size: 6rem;
+}
+
+#restartButton {
+	padding: 0.5em 1.5em;
+	font-size: 1.1rem;
+	background: #318ed5;
+	border: none;
+	border-radius: 5px;
+	color: white;
+	text-shadow: 0px 2px 2px black;
+	box-shadow: 2px 2px 3px black;
+	cursor: pointer;
+}
+
+#restartButton:hover {
+	transform: scale(1.02);
+	background: #409de4;
 }
 
 #loseDialog {
@@ -46,4 +74,5 @@ body {
 	font-size: 6rem;
 	text-transform: uppercase;
 	color: rgb(196, 17, 17);
+	text-shadow: 2px 0px 2px black;
 }

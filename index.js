@@ -1,10 +1,12 @@
 import { createImage, platformSmallTall } from './CreateImage.js';
-import { reset, player, platformImage, platforms, genericObjects, scrollOffsetNumber } from './reset.js';
-import { showLoseDialog } from './dialog/LoseDialog.js';
-import { loseDialog } from './dialog/LoseDialog.js';
+import { reset, player, platformImage, platforms, genericObjects, scrollOffsetNumber, restartButtonClickedValue } from './reset.js';
+import { showLoseDialog, hideLoseDialog } from './dialog/LoseDialog.js';
+import { showWinDialog, hideWinDialog } from './dialog/WindDialog.js';
+import { makeDisplayNone, makeDisplayFlex } from './dialog/DialogFunctions.js';
 
 export const canvas = document.querySelector('canvas');
 export const context = canvas.getContext('2d');
+const restartButton = document.querySelector('#restartButton');
 
 canvas.width = 1280;
 canvas.height = 720;
@@ -12,6 +14,8 @@ canvas.height = 720;
 export const gravity = 0.8;
 
 export let platformSmallTallImage = createImage(platformSmallTall);
+
+let won = false; // Used to see if the player has beat the game
 
 let lastKey;
 
@@ -25,6 +29,7 @@ let keys = {
 };
 
 let scrollOffset = scrollOffsetNumber; // Used for when the player wins
+let restartButtonClicked = restartButtonClickedValue;
 
 function animate() {
 	requestAnimationFrame(animate);
@@ -109,44 +114,66 @@ function animate() {
 	// TODO make winner dialog and restart game option and maybe exit game
 	// Win condition
 	if (scrollOffset > platformImage.width * 5 + 550) {
-		console.log('You win');
+		makeDisplayFlex();
+		showWinDialog();
+		won = true;
+
+		if (restartButtonClicked) {
+			makeDisplayNone();
+			hideWinDialog();
+			won = false;
+		}
 	}
 
 	// Lose condition
 	if (player.position.y > canvas.height) {
+		makeDisplayFlex();
 		showLoseDialog();
-		// setTimeout(() => { // might need work
-		// 	if (loseDialog.className === 'hide') {
-		// 		reset();
-		// 	}
-		// }, 1000);
-		reset();
+
+		if (player.position.y > canvas.height + 2000) {
+			reset();
+			makeDisplayNone();
+			hideLoseDialog();
+		}
 	}
 }
 
 reset();
 animate();
 
+restartButton.addEventListener('click', () => {
+	restartButtonClicked = true;
+	reset();
+});
+
 // TODO make S key something
 window.addEventListener('keydown', ({ keyCode }) => {
 	switch (keyCode) {
 		case 65: // A key 'left'
-			keys.left.pressed = true;
-			lastKey = 'left';
+			if (!won) {
+				keys.left.pressed = true;
+				lastKey = 'left';
+			}
 			break;
 
 		case 83: // S key 'down'
-			player.velocity.y += 2;
+			if (!won) {
+				player.velocity.y += 2;
+			}
 			break;
 
 		case 68: // D key 'right'
-			keys.right.pressed = true;
-			lastKey = 'right';
+			if (!won) {
+				keys.right.pressed = true;
+				lastKey = 'right';
+			}
 			break;
 
 		case 87: // W key 'up'
-			if (player.velocity.y === 0) {
-				player.velocity.y -= 18;
+			if (!won) {
+				if (player.velocity.y === 0) {
+					player.velocity.y -= 18;
+				}
 			}
 			break;
 	}
