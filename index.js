@@ -6,8 +6,8 @@ import { GenericObject } from './GenericObject.js';
 export const canvas = document.querySelector('canvas');
 export const context = canvas.getContext('2d');
 
-canvas.width = 1024;
-canvas.height = 576;
+canvas.width = 1280;
+canvas.height = 720;
 
 export const gravity = 0.8;
 
@@ -37,41 +37,41 @@ function reset() {
 
 	player = new Player();
 	platforms = [
-		new Platform({ xPos: -1, yPos: 470, image: platformImage }),
+		new Platform({ xPos: -1, yPos: 600, image: platformImage }),
 		new Platform({
 			xPos: platformImage.width - 3,
-			yPos: 470,
+			yPos: 600,
 			image: platformImage,
 		}),
 		new Platform({
 			xPos: platformImage.width * 2 + 150,
-			yPos: 470,
+			yPos: 600,
 			image: platformImage,
 		}),
 		new Platform({
 			xPos: platformImage.width * 3 + 350,
-			yPos: 470,
+			yPos: 600,
 			image: platformImage,
 		}),
 		new Platform({
 			xPos: platformImage.width * 4 + 350 - 2 + platformImage.width - platformSmallTallImage.width,
-			yPos: 270,
+			yPos: 400,
 			image: platformSmallTallImage,
 		}),
 		new Platform({
 			xPos: platformImage.width * 4 + 350 - 2,
-			yPos: 470,
+			yPos: 600,
 			image: platformImage,
 		}),
 		new Platform({
 			xPos: platformImage.width * 5 + 790,
-			yPos: 470,
+			yPos: 600,
 			image: platformImage,
 		}),
 	];
 	genericObjects = [
 		new GenericObject({ xPos: -1, yPos: -1, image: createImage(background) }),
-		new GenericObject({ xPos: -1, yPos: -1, image: createImage(hills) }),
+		new GenericObject({ xPos: -1, yPos: 140, image: createImage(hills) }),
 	];
 
 	scrollOffset = 0; // Used for when the player wins
