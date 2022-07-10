@@ -3,6 +3,8 @@ import { reset, player, platforms, genericObjects } from './reset/Reset.js';
 import { showLoseDialog, hideLoseDialog } from './dialog/LoseDialog.js';
 import { showWinDialog, hideWinDialog } from './dialog/WindDialog.js';
 import { makeDisplayNone, makeDisplayFlex } from './dialog/DialogFunctions.js';
+import { checkKeysEntered } from './control/ControlsFunctions.js';
+import { showControlsDialog } from './dialog/ControlsDialog.js';
 
 export const canvas = document.querySelector('canvas');
 export const context = canvas.getContext('2d');
@@ -149,6 +151,11 @@ function animate() {
 window.onload = function () {
 	animate();
 	reset();
+
+	setTimeout(() => {
+		makeDisplayFlex();
+		showControlsDialog();
+	}, 1200);
 };
 
 restartButton.addEventListener('click', () => {
@@ -162,22 +169,26 @@ window.addEventListener('keydown', ({ keyCode }) => {
 		case 65: // A key 'left'
 			keys.left.pressed = true;
 			lastKey = 'left';
+			checkKeysEntered('A');
 			break;
 
 		case 83: // S key 'down'
 			if (!won) {
 				player.velocity.y += 2;
 			}
+			checkKeysEntered('S');
 			break;
 
 		case 68: // D key 'right'
 			keys.right.pressed = true;
 			lastKey = 'right';
+			checkKeysEntered('D');
 			break;
 
 		case 87: // W key 'up'
 			if (player.velocity.y === 0) {
 				player.velocity.y -= 18;
+				checkKeysEntered('W');
 			}
 			break;
 	}

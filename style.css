@@ -35,6 +35,33 @@ body {
 
 #controls {
 	display: none;
+	align-items: center;
+	gap: 1rem;
+	justify-content: center;
+	cursor: default;
+	color: white;
+}
+
+#controls h1 {
+	text-align: center;
+	text-shadow: 2px 0px 1px black;
+}
+
+#controls h2 {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 40px;
+	height: 40px;
+	background-color: #d3d3d3c7;
+	border: 5px inset #808080b3;
+	color: white;
+	text-shadow: 1px 0px 1px black;
+}
+
+#controls p {
+	font-size: 20px;
+	text-shadow: 2px 0px 1px black;
 }
 
 #winDialog {

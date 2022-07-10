@@ -16,13 +16,18 @@
     <script type="module" defer src="./dialog/ControlsDialog.js"></script>
     <script type="module" defer src="./dialog/DialogFunctions.js"></script>
     <script type="module" defer src="./dialog/WindDialog.js"></script>
+    <script type="module" defer src="./control/ControlsFunctions.js"></script>
 </head>
 <body>   
     
     <canvas></canvas>
     <img class="myImg"/>
     <div class="dialog">
-        <div id="controls"></div>
+        <div id="controls">
+            <h1>Press: </h1>
+            <h2 id="controlButton">W</h2>
+            <p id="controlDesc">to jump</p>
+        </div>
         <div id="winDialog">
             <h2>You Win</h2>
             <button type="button" id="restartButton">restart game</button>
