@@ -1,5 +1,5 @@
 import { createImage, platformSmallTall, background } from './CreateImage.js';
-import { reset, player, platforms, genericObjects } from './reset.js';
+import { reset, player, platforms, genericObjects } from './reset/Reset.js';
 import { showLoseDialog, hideLoseDialog } from './dialog/LoseDialog.js';
 import { showWinDialog, hideWinDialog } from './dialog/WindDialog.js';
 import { makeDisplayNone, makeDisplayFlex } from './dialog/DialogFunctions.js';

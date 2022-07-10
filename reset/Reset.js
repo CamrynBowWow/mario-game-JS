@@ -1,8 +1,8 @@
-import { Platform } from './Platform.js';
-import { Player } from './Player.js';
-import { GenericObject } from './GenericObject.js';
-import { platformSmallTallImage } from './index.js';
-import { createImage, platform, hills, background } from './CreateImage.js';
+import { Platform } from '../Platform.js';
+import { Player } from '../Player.js';
+import { GenericObject } from '../GenericObject.js';
+import { platformSmallTallImage } from '../index.js';
+import { createImage, platform, hills, background } from '../CreateImage.js';
 
 let platformImage = createImage(platform);
 export let player = new Player();
