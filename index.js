@@ -1,5 +1,5 @@
 import { createImage, platformSmallTall, background } from './CreateImage.js';
-import { reset, player, platforms, genericObjects, scrollOffsetNumber } from './reset.js';
+import { reset, player, platforms, genericObjects } from './reset.js';
 import { showLoseDialog, hideLoseDialog } from './dialog/LoseDialog.js';
 import { showWinDialog, hideWinDialog } from './dialog/WindDialog.js';
 import { makeDisplayNone, makeDisplayFlex } from './dialog/DialogFunctions.js';
@@ -30,7 +30,7 @@ let keys = {
 	},
 };
 
-let scrollOffset = scrollOffsetNumber; // Used for when the player wins
+let scrollOffset = 0; // Used for when the player wins
 let restartButtonClicked = false;
 
 function animate() {
@@ -144,6 +144,7 @@ function animate() {
 			hideLoseDialog();
 		}
 	}
+	console.log(scrollOffset);
 }
 
 reset();

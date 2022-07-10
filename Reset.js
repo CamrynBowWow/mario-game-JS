@@ -9,8 +9,6 @@ export let player = new Player();
 export let platforms = [];
 export let genericObjects = [];
 
-export let scrollOffsetNumber = 0;
-
 export function reset() {
 	platformImage = createImage(platform);
 
@@ -207,6 +205,4 @@ export function reset() {
 		new GenericObject({ xPos: -1, yPos: -1, image: createImage(background) }),
 		new GenericObject({ xPos: -1, yPos: 140, image: createImage(hills) }),
 	];
-
-	scrollOffsetNumber = 0; // Used for when the player wins
 }
