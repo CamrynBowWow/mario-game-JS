@@ -1,5 +1,5 @@
-import { hideControlsDialog } from '../dialog/ControlsDialog.js';
-import { makeDisplayNone } from '../dialog/DialogFunctions.js';
+import { hideControlsDialog, showControlsDialog } from '../dialog/ControlsDialog.js';
+import { makeDisplayNone, makeDisplayFlex } from '../dialog/DialogFunctions.js';
 
 const controlKey = document.querySelector('#controlButton');
 const controlDesc = document.querySelector('#controlDesc');
@@ -7,6 +7,8 @@ const controlDesc = document.querySelector('#controlDesc');
 let keyArrayValues = ['W', 'D', 'A', 'S'];
 
 function controlInformation(value) {
+	showControlsDialog();
+
 	switch (value) {
 		case 'W':
 			controlKey.innerText = 'D';
@@ -31,6 +33,7 @@ function controlInformation(value) {
 }
 
 export function checkKeysEntered(key) {
+	makeDisplayFlex();
 	if (keyArrayValues[0] === key) {
 		controlInformation(key);
 		keyArrayValues.splice(0, 1);

@@ -132,22 +132,22 @@ export function reset() {
 		}),
 		new Platform({
 			xPos: platformImage.width * 19 + 2100,
-			yPos: 550,
+			yPos: 600,
 			image: platformImage,
 		}),
 		new Platform({
 			xPos: platformImage.width * 20 + 2098,
-			yPos: 550,
+			yPos: 600,
 			image: platformImage,
 		}),
 		new Platform({
 			xPos: platformImage.width * 21 + 2097,
-			yPos: 550,
+			yPos: 600,
 			image: platformImage,
 		}),
 		new Platform({
 			xPos: platformImage.width * 22 + 2096,
-			yPos: 550,
+			yPos: 600,
 			image: platformImage,
 		}),
 		new Platform({
@@ -157,7 +157,7 @@ export function reset() {
 		}),
 		new Platform({
 			xPos: platformImage.width * 23 + 2095,
-			yPos: 550,
+			yPos: 600,
 			image: platformImage,
 		}),
 		new Platform({
@@ -203,6 +203,6 @@ export function reset() {
 	];
 	genericObjects = [
 		new GenericObject({ xPos: -1, yPos: -1, image: createImage(background) }),
-		new GenericObject({ xPos: -1, yPos: 140, image: createImage(hills) }),
+		new GenericObject({ xPos: -1, yPos: 163, image: createImage(hills) }),
 	];
 }

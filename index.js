@@ -4,7 +4,7 @@ import { showLoseDialog, hideLoseDialog } from './dialog/LoseDialog.js';
 import { showWinDialog, hideWinDialog } from './dialog/WindDialog.js';
 import { makeDisplayNone, makeDisplayFlex } from './dialog/DialogFunctions.js';
 import { checkKeysEntered } from './control/ControlsFunctions.js';
-import { showControlsDialog } from './dialog/ControlsDialog.js';
+import { showControlsDialog, hideControlsDialog } from './dialog/ControlsDialog.js';
 
 export const canvas = document.querySelector('canvas');
 export const context = canvas.getContext('2d');
@@ -137,6 +137,7 @@ function animate() {
 	if (player.position.y > canvas.height) {
 		makeDisplayFlex();
 		showLoseDialog();
+		hideControlsDialog();
 		scrollOffset = 0;
 
 		if (player.position.y > canvas.height + 2000) {
