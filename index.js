@@ -116,7 +116,6 @@ function animate() {
 
 	// TODO make game option to maybe exit game
 	// Win condition
-	// if (scrollOffset > platformImage.width * 5 + 550) {
 	if (scrollOffset / 2 > backgroundWidth.width - 1450) {
 		makeDisplayFlex();
 		showWinDialog();
@@ -128,7 +127,7 @@ function animate() {
 			hideWinDialog();
 			won = false;
 			player.speed = 8;
-			scrollOffset = 0; // TODO Fix this as it does not reset from function reset()
+			scrollOffset = 0;
 		}
 	}
 
@@ -136,7 +135,7 @@ function animate() {
 	if (player.position.y > canvas.height) {
 		makeDisplayFlex();
 		showLoseDialog();
-		scrollOffset = 0; // TODO Fix this as it does not reset from function reset()
+		scrollOffset = 0;
 
 		if (player.position.y > canvas.height + 2000) {
 			reset();
@@ -144,11 +143,13 @@ function animate() {
 			hideLoseDialog();
 		}
 	}
-	console.log(scrollOffset);
 }
 
-reset();
-animate();
+// This will fire the functions that display the background, player and platforms when all the files have loaded
+window.onload = function () {
+	animate();
+	reset();
+};
 
 restartButton.addEventListener('click', () => {
 	restartButtonClicked = true;
