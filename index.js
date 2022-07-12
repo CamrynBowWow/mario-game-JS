@@ -5,6 +5,7 @@ import { showWinDialog, hideWinDialog } from './dialog/WindDialog.js';
 import { makeDisplayNone, makeDisplayFlex } from './dialog/DialogFunctions.js';
 import { checkKeysEntered } from './control/ControlsFunctions.js';
 import { showControlsDialog, hideControlsDialog } from './dialog/ControlsDialog.js';
+import { playMusic } from './MusicPlayer.js';
 
 export const canvas = document.querySelector('canvas');
 export const context = canvas.getContext('2d');
@@ -152,6 +153,7 @@ function animate() {
 window.onload = function () {
 	animate();
 	reset();
+	playMusic();
 
 	setTimeout(() => {
 		makeDisplayFlex();

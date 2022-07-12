@@ -15,6 +15,7 @@
     <script type="module" defer src="Player.js"></script>
     <script type="module" defer src="Platform.js"></script>
     <script type="module" defer src="GenericObject.js"></script>
+    <script type="module" defer src="MusicPlayer.js" ></script>
     <script type="module" defer src="./reset/Reset.js"></script>
     <script type="module" defer src="./dialog/LoseDialog.js"></script>
     <script type="module" defer src="./dialog/ControlsDialog.js"></script>
@@ -25,7 +26,13 @@
 <body>   
     
     <canvas></canvas>
+
     <img class="myImg"/>
+
+    <audio id="gameSound">
+        <source src="./music/Superboy.mp3" type="audio/mpeg">
+    </audio>
+
     <div class="dialog">
         <div id="controls">
             <h1>Press: </h1>
